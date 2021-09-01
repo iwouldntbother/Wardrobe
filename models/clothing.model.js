@@ -4,7 +4,6 @@ const Clothing = mongoose.model(
   "Clothing",
   new mongoose.Schema({
     id: String,
-    iconPath: String,
     mainColour: String,
     subColours: Array
   })

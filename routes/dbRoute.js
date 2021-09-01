@@ -5,7 +5,7 @@ module.exports = (app) => {
   //   next();
   // })
 
-  app.get('/api/addClothing', controller.addClothing)
+  app.post('/api/addClothing', controller.addClothing)
 
   app.get('/api/getClothing', controller.getClothing)
 }
