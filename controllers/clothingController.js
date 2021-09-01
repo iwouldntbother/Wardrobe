@@ -6,6 +6,7 @@ exports.addClothing = (req, res) => {
 
   const clothing = new Clothing({
     id: req.body.id,
+    iconPath: req.body.iconPath,
     mainColour: req.body.mainColour,
     subColours: req.body.subColours
   });

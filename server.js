@@ -2,7 +2,6 @@ const express = require("express");
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-const bodyParser = require("body-parser");
 const cors = require("cors");
 
 var corsOptions = {
@@ -11,8 +10,9 @@ var corsOptions = {
 
 app.use(cors(corsOptions));
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
+
 
 process.env.MONGODB_URI = 'mongodb://localhost:27017/wardrobeDB'
 
