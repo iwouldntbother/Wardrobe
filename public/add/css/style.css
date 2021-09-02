@@ -100,3 +100,7 @@ input {
 .disabled {
   background-color: darkgray !important;
 }
+
+.clothingGridItem object {
+  pointer-events: none;
+}

@@ -1,3 +1,14 @@
+import referenceTable from "/js/referenceTable.js";
+
+const buildGrid = () => {
+  for (var i=0; i<referenceTable.clothingIconPaths.length; i++) {
+    document.getElementById('clothingGrid').innerHTML += '<div id="c'+('0'+i).slice(-2)+'" class="clothingGridItem"><object data="'+ referenceTable.clothingIconPaths[i] +'"></object></div>'
+  }
+}
+
+buildGrid();
+
+
 var subCount = 1;
 
 const addSubOption = () => {
@@ -21,7 +32,7 @@ function rmSub(id) {
 var selectedItem;
 var submitDisabled = true;
 
-function selectItem(item) {
+const selectItem = (item) => {
   if (selectedItem) {
     selectedItem.classList.remove('selected')
   } else {
@@ -31,6 +42,14 @@ function selectItem(item) {
   item.classList.add('selected')
   selectedItem = item;
 }
+
+document.body.addEventListener('click', (event) => {
+  if ([...document.getElementById("clothingGrid").children].includes(event.target)) {
+    selectItem(event.target);
+  } else {
+    return
+  }
+})
 
 document.getElementById('submitClothingItem').addEventListener('click', () => {
   if (!submitDisabled) {
