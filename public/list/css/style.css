@@ -1,0 +1,38 @@
+body {
+  padding: 0;
+  margin: 0;
+}
+
+img {
+  max-width: 25vw;
+  max-height: 25vw;
+}
+
+.coloursHolder {
+  width: 100vw;
+  height: 25vw;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+}
+
+.mainColour {
+  width: 25vw;
+  height: 25vw;
+  background-color: darkgreen;
+}
+
+.subColoursHolder {
+  display: flex;
+  max-width: 75vw;
+  height: 25vw;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: left;
+}
+
+.subColour {
+  width: 12.5vw;
+  height: 12.5vw;
+}

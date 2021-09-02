@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wardrobe - Add</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="container">
+
+    <h1>Add Clothing Item</h1>
+
+    <h2>Clothing Type</h2>
+    <div id="clothingGrid">
+      <div id="c00" class="clothingGridItem" onclick="selectItem(this);">1</div>
+      <div id="c01" class="clothingGridItem" onclick="selectItem(this);">2</div>
+      <div id="c02" class="clothingGridItem" onclick="selectItem(this);">3</div>
+      <div id="c03" class="clothingGridItem" onclick="selectItem(this);">4</div>
+      <div id="c04" class="clothingGridItem" onclick="selectItem(this);">5</div>
+      <div id="c05" class="clothingGridItem" onclick="selectItem(this);">6</div>
+      <div id="c06" class="clothingGridItem" onclick="selectItem(this);">7</div>
+      <div id="c07" class="clothingGridItem" onclick="selectItem(this);">8</div>
+      <div id="c08" class="clothingGridItem" onclick="selectItem(this);">9</div>
+      <div id="c09" class="clothingGridItem" onclick="selectItem(this);">10</div>
+    </div>
+    
+    <h2>Clothing Colour</h2>
+    <input id='mainColourInput' type='color'>
+    
+    <h2>Clothing Sub-Colours</h2>
+    <div id="clothingSubColours">
+      <div class="subColourHolder" id='subColourHolder0'>
+        <input class="subInput" id='subColourInput0' type='color'>
+        <div class="subColourRM" id='subColourRM0' onclick="rmSub(this.id)">-</div>
+      </div>
+    </div>
+    <div id="addSubBTN">+</div>
+  
+  </div>
+
+  <div id="submitClothingItem" class="disabled">Add to database</div>
+  
+  <script src="js/script.js"></script>
+  
+</body>
+</html>
