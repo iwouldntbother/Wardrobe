@@ -1,8 +1,11 @@
-
+var subCount = 1;
 
 const addSubOption = () => {
-  var newNo = document.getElementById('clothingSubColours').childElementCount;
-  document.getElementById('clothingSubColours').innerHTML += "<div class='subColourHolder' id='subColourHolder"+Number(newNo)+"'><input class='subInput' id='subColourInput"+Number(newNo)+"' type='color'><div class='subColourRM' id='subColourRM"+Number(newNo)+"' onclick='rmSub(this.id)'>-</div></div>"
+  if (subCount < 12) {
+    var newNo = document.getElementById('clothingSubColours').childElementCount;
+    document.getElementById('clothingSubColours').innerHTML += "<div class='subColourHolder' id='subColourHolder"+Number(newNo)+"'><input class='subInput' id='subColourInput"+Number(newNo)+"' type='color'><div class='subColourRM' id='subColourRM"+Number(newNo)+"' onclick='rmSub(this.id)'>-</div></div>"
+    subCount++;
+  }
 }
 
 document.getElementById('addSubBTN').addEventListener('click', () => {
@@ -12,6 +15,7 @@ document.getElementById('addSubBTN').addEventListener('click', () => {
 function rmSub(id) {
   var index = id.replace('subColourRM', '')
   document.getElementById('subColourHolder'+index).remove()
+  subCount--;
 }
 
 var selectedItem;
