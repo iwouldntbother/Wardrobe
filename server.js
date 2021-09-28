@@ -14,7 +14,10 @@ app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
 
-process.env.MONGODB_URI = 'mongodb://localhost:27017/wardrobeDB'
+// process.env.MONGODB_URI = 'mongodb://localhost:27017/wardrobeDB'
+
+const MONGO_URL = process.env.MONGOD_URL || 'mongodb://localhost:27017/wardrobeDB'
+
 
 const dbConfig = require("./config/db.config");
 const db = require("./models");
