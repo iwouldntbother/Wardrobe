@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const PORT = process.env.PORT || 3000;
-
+const path = require('path')
 const cors = require("cors");
 
 var corsOptions = {
@@ -16,7 +16,7 @@ app.use(express.urlencoded({extended: true}));
 
 // process.env.MONGODB_URI = 'mongodb://localhost:27017/wardrobeDB'
 
-const MONGO_URL = process.env.MONGOD_URL || 'mongodb://localhost:27017/wardrobeDB'
+const MONGO_URL = process.env.MONGODB_URL || 'mongodb://localhost:27017/wardrobeDB'
 
 
 const dbConfig = require("./config/db.config");
@@ -39,10 +39,21 @@ db.mongoose
 });
 
 require('./routes/dbRoute')(app);
+require('./routes/indexRoute')(app);
 
-// app.use("/", express.static(__dirname + '/public'));
 
-app.use("/", express.static('D:/home/site/wwwroot/public'));
+// app.get('/', (req, res) => {
+//   res.send('Hello World!');
+// });
+// app.use(express.static('public'));
+
+
+// // app.use("/wardrobe", express.static('D:/home/site/wwwroot/public'));
+// app.use('/wardrobe', express.static(path.join(__dirname, 'public')));
+
+// app.get('/', (res, req) => {
+//   req.send({'message':'Hello'});
+// })
 
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
