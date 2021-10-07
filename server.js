@@ -2,13 +2,13 @@ const express = require("express");
 const app = express();
 const PORT = process.env.PORT || 3000;
 const path = require('path')
-// const cors = require("cors");
+const cors = require("cors");
 
-// var corsOptions = {
-//   origin: "http://localhost:8081"
-// }
+var corsOptions = {
+  origin: "http://localhost:8081"
+}
 
-// app.use(cors(corsOptions));
+app.use(cors(corsOptions));
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
