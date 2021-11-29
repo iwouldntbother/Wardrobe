@@ -6,8 +6,10 @@ module.exports = (app) => {
   // })
 
   app.post('/api/addClothing', controller.addClothing)
-
+  app.post('/api/rmClothingItem', controller.rmClothingItem)
+  
   app.get('/api/getClothing', controller.getClothing)
+  app.get('/api/getClothingCount', controller.getClothingCount)
 }
 
 // Start Local DB

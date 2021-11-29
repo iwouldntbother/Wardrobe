@@ -1,4 +1,4 @@
-import referenceTable from "/js/referenceTable.js";
+import referenceTable from "../../js/referenceTable.js";
 
 const buildGrid = () => {
   for (var i=0; i<referenceTable.clothingIconPaths.length; i++) {
@@ -14,7 +14,7 @@ var subCount = 1;
 const addSubOption = () => {
   if (subCount < 12) {
     var newNo = document.getElementById('clothingSubColours').childElementCount;
-    document.getElementById('clothingSubColours').innerHTML += "<div class='subColourHolder' id='subColourHolder"+Number(newNo)+"'><input class='subInput' id='subColourInput"+Number(newNo)+"' type='color'><div class='subColourRM' id='subColourRM"+Number(newNo)+"' onclick='rmSub(this.id)'>-</div></div>"
+    document.getElementById('clothingSubColours').innerHTML += "<div class='subColourHolder' id='subColourHolder"+Number(newNo)+"'><input class='subInput' id='subColourInput"+Number(newNo)+"' type='color'><div class='subColourRM' id='subColourRM"+Number(newNo)+"'>-</div></div>"
     subCount++;
   }
 }
@@ -46,7 +46,9 @@ const selectItem = (item) => {
 document.body.addEventListener('click', (event) => {
   if ([...document.getElementById("clothingGrid").children].includes(event.target)) {
     selectItem(event.target);
-  } else {
+  } else if (event.target.id.includes('subColourRM')) {
+    rmSub(event.target.id);
+  }else {
     return
   }
 })

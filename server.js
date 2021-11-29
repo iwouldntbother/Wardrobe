@@ -32,7 +32,6 @@ db.mongoose
 })
 .then(() => {
   console.log("Successfully connect to MongoDB.");
-  console.log(path.join(__dirname, 'public'));
 })
 .catch(err => {
   console.error("Connection error", err);
@@ -43,28 +42,8 @@ require('./routes/dbRoute')(app);
 // require('./routes/indexRoute')(app);
 
 
-// app.get('/', (req, res) => {
-//   res.send('Hello World!');
-// });
-// app.use(express.static('public'));
+app.use("/", express.static(path.join(__dirname, 'public')));
 
-
-// // app.use("/wardrobe", express.static('D:/home/site/wwwroot/public'));
-// app.use('/wardrobe', express.static(path.join(__dirname, 'public')));
-
-app.get('/test', (res, req) => {
-  req.send('Hello');
-})
-
-// app.use("/", express.static(__dirname + '/home/site/wwwroot/public'));
-
-// app.get('/', function(req, res) {
-//   res.sendFile(path.join('/home/site/wwwroot/public', 'index.html'));
-// });
-
-app.use('/', express.static('/home/site/wwwroot/public'));
-
-// console.log(path.join(__dirname, 'public'));
 
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);

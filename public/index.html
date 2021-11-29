@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wardrobe</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css">
+</head>
+<body>
+  <div id="mainContainer">
+
+    <div id="homePageContainer" class="pageContainer">
+
+      <div id="outfitCarouselContainer">
+        <div class="carouselTopBar">
+          <button id="allOutfits">View all</button>
+        </div>
+        <div id="outfitCarouselHolder" class="js-flickity" data-flickity-options='{"wrapAround":true, "prevNextButtons":false}''>
+          <div class="outfitCarouselCell">1</div>
+          <div class="outfitCarouselCell">2</div>
+          <div class="outfitCarouselCell">3</div>
+          <div class="outfitCarouselCell">4</div>
+        </div>
+      </div>
+
+      <div id="paletteContainer">
+        <div id="paletteHolder">
+          <div id="mainColour"style='background: #944346;'></div>
+          <div id="subColoursHolder">
+            <div class="subColour" style='background: #238561;'></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="slideUpContainer">
+        <div id="slideUpBarHolder">
+          <div id="slideUpBar"></div>
+        </div>
+        <div id="slideUpContentHolder">
+          <div id="slideUpTopMenu">
+            <p>All Clothes</p>
+            <button></button>
+          </div>
+          <div id="clothesList">
+            <div class="clothesListItem">
+              <div class="clothesListIcon"></div>
+              <p class="clothesListName">Test name</p>
+            </div>
+            
+            <div class="clothesListItem">
+              <div class="clothesListIcon"></div>
+              <p class="clothesListName">Test name</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div id="itemsPageContainer" class="pageContainer" style="display: none;">
+      
+      <h1>Add Clothing Item</h1>
+
+      <h2>Clothing name</h2>
+      <input id="clothingNameInput" type="text" placeholder="Clothing Name">
+
+      <h2>Clothing Type</h2>
+      <div id="clothingGrid">
+      </div>
+      
+      <h2>Clothing Colour</h2>
+      <input id='mainColourInput' type='color'>
+      
+      <h2>Clothing Sub-Colours</h2>
+      <div id="clothingSubColours">
+        <div class="subColourHolder" id='subColourHolder0'>
+          <input class="subInput" id='subColourInput0' type='color'>
+          <div class="subColourRM" id='subColourRM0'>-</div>
+        </div>
+      </div>
+      <div id="addSubBTN">+</div>
+
+      <div id="submitClothingItem" class="disabled">Add to database</div>
+
+    </div>
+    
+    <div id="outfitsPageContainer" class="pageContainer" style="display: none;">Outfits Page</div>
+
+    <div id="menuBarContainer">
+      <div id="menuBarBTNHolder">
+        
+        <div id="homeBTN" class="menuBarBTN">
+          <div class="menuBarIcon"></div>
+          <p class="menuBarText">Home</span>
+        </div>
+        
+        <div id="itemsBTN" class="menuBarBTN">
+          <div class="menuBarIcon"></div>
+          <p class="menuBarText">Item</span>
+        </div>
+        
+        <div id="outfitsBTN" class="menuBarBTN">
+          <div class="menuBarIcon"></div>
+          <p class="menuBarText">Outfit</span>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- DEBUG -->
+  <script src="http://livejs.com/live.js"></script>
+  <!-- DEBUG -->
+
+  <script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
+  <script type="module" src="js/script.js"></script>
+
+</body>
+</html>
