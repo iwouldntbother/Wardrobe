@@ -1,15 +1,19 @@
-const controller = require('../controllers/clothingController')
+const clothingController = require('../controllers/clothingController')
+const outfitController = require('../controllers/outfitController')
 
 module.exports = (app) => {
-  // app.use((req, res, next) => {
-  //   next();
-  // })
 
-  app.post('/api/addClothing', controller.addClothing)
-  app.post('/api/rmClothingItem', controller.rmClothingItem)
+  app.post('/api/addClothing', clothingController.addClothing)
+  app.post('/api/rmClothingItem', clothingController.rmClothingItem)
   
-  app.get('/api/getClothing', controller.getClothing)
-  app.get('/api/getClothingCount', controller.getClothingCount)
+  app.get('/api/getClothing', clothingController.getClothing)
+  app.get('/api/getClothingCount', clothingController.getClothingCount)
+
+  app.post('/api/addOutfit', outfitController.addOutfit)
+  app.post('/api/rmOutfitItem', outfitController.rmOutfitItem)
+
+  app.get('/api/getOutfit', outfitController.getOutfit)
+  app.get('/api/getOutfitCount', outfitController.getOutfitCount)
 }
 
 // Start Local DB

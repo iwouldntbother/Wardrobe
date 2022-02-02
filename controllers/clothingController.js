@@ -2,47 +2,12 @@ const async = require('async')
 const db = require('../models');
 const { count, find } = require('../models/clothing.model');
 const Clothing = db.clothing;
+const { v4: uuidv4 } = require("uuid")
 
 exports.addClothing = async (req, res) => {
-  // console.log(req.body)
-
-  // const checkID = await Clothing.find({id: newID})
-  // while (checkID) {
-    //   count++
-    //   newID = '%' + req.body.id + '%' + (('000'+count).slice(-4));
-    // }
-    // const findNewID = () => {
-      //   tempID = '%' + req.body.id + '%' + (('000'+count).slice(-4));
-      //   console.log(tempID)
-      //   Clothing.findOne({id: tempID}, (err, item) => {
-        //     console.log(err, item)
-        //     if (item) {
-          //       return
-          //     } else {
-            //       count++
-            //       findNewID();
-            //     }
-            //   })
-            //   return tempID
-            // }
-            
-            // var newID = findNewID();
-            
-            // async.whilst(
-              //   () => { return Clothing.findOne({id: newID}) == false; },
-              //   (next) => {
-                //     count++
-                //     newID = '%' + req.body.id + '%' + (('000'+count).slice(-4));
-                //     next();
-                //   },
-                //   (err) => {
-                  //     console.log(err, count)
-                  //   }
-                  // )
-  
   
   var count = await Clothing.count();
-  const newID = 'thisisntworkingyet'
+  const newID = uuidv4();
   
   const findID = async () => {
     var allIDS = await Clothing.find({}, 'id').exec();
@@ -61,6 +26,7 @@ exports.addClothing = async (req, res) => {
 
   const clothing = new Clothing({
     id: newID,
+    type: '%'+req.body.id,
     name: req.body.name,
     mainColour: req.body.mainColour,
     subColours: req.body.subColours

@@ -1,9 +1,4 @@
-
-
 module.exports = (app) => {
-  // app.use((req, res, next) => {
-  //   next();
-  // })
 
   app.get('/', express.static(path.join(__dirname, 'public')))
 }

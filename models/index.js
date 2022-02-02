@@ -7,4 +7,6 @@ db.mongoose = mongoose;
 
 db.clothing = require('./clothing.model')
 
+db.outfit = require('./outfit.model')
+
 module.exports = db;

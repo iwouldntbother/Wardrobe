@@ -38,6 +38,7 @@ const updateClothingArray = () => {
       clothingList = JSON.parse(xhttp.responseText);
       // console.log(clothingList)
       updateList();
+      updateOutfitList();
     }
   }
   xhttp.open('GET', '/api/getClothing');
@@ -49,33 +50,13 @@ const updateList = () => {
   document.getElementById('clothesList').innerHTML = ''
   for (var i=0; i < clothingList.length; i++) {
     
-    let typeID = clothingList[i].id.split('%')[1]
+    let typeID = clothingList[i].type.split('%')[1]
 
     var listItem = document.createElement('div')
     listItem.className = 'clothesListItem'
     listItem.innerHTML = '<object class="clothesListIcon" data="'+ referenceTable.clothingIconPaths[Number(typeID)] +'" onload="var x = this.contentDocument.querySelectorAll(\'path\'); for(var i=0;i<x.length;i++){x[i].setAttribute(\'fill\', \''+clothingList[i].mainColour+'\')};"></object><p class="clothesListName">'+clothingList[i].name+'</p><div id="rmItem'+ clothingList[i].id +'" class="rmClothesItem">-</div>'
     
     document.getElementById('clothesList').appendChild(listItem)
-    
-    // listItem.getElementById("rmItem" + clothingList[i].id).addEventListener('click', () => {
-    //   var r = confirm("Are you sure you want to delete this item?");
-    //   if (r) {
-    //     deleteClothingItem(clothingList[i].id);
-    //   } else {
-    //     return
-    //   }
-    // })
-
-    // document.getElementById('dbtest').innerHTML += 'id: ' + clothingList[i].id + '<br>';
-    // document.getElementById('dbtest').innerHTML += 'iconPath: ' + referenceTable.clothingIconPaths[Number(typeID)] + '<br>';
-    // document.getElementById('dbtest').innerHTML += '<object data="'+ referenceTable.clothingIconPaths[Number(typeID)] +'" onload="var x = this.contentDocument.querySelectorAll(\'path\'); for(var i=0;i<x.length;i++){x[i].setAttribute(\'fill\', \''+clothingList[i].mainColour+'\')};"></object><br>'
-    // document.getElementById('dbtest').innerHTML += 'mainColour: ' + clothingList[i].mainColour + '<br>';
-    // document.getElementById('dbtest').innerHTML += '<div class="coloursHolder"><div class="mainColour" style="background-color:'+clothingList[i].mainColour+';"></div><div id="subColoursHolder'+i+'" class="subColoursHolder"></div></div>';
-    // // SubColours
-    // for (var j=0; j<clothingList[i].subColours.length; j++) {
-    //   if (j == 12) { return; }
-    //   document.getElementById('subColoursHolder'+i).innerHTML += '<div class="subColour" style="background-color:'+clothingList[i].subColours[j]+';"></div>'
-    // }
   }
 }
 
@@ -223,7 +204,7 @@ document.getElementById('submitClothingItem').addEventListener('click', () => {
     const whiteSpace = new RegExp("^\\s*$");
 
     if (whiteSpace.test(document.getElementById('clothingNameInput').value)) {
-      data.name = "unnamed clothing item"
+      data.name = "Unnamed"
     } else {
       data.name = document.getElementById("clothingNameInput").value
     }
@@ -255,6 +236,157 @@ document.getElementById('submitClothingItem').addEventListener('click', () => {
     }
     // console.log(body)
     xhttp.open('POST', '/api/addClothing');
+    xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    xhttp.send(JSON.stringify(data));
+
+  }
+})
+
+// Outfits Page //
+
+const updateOutfitList = () => {
+  document.getElementById('clothingListHolder').innerHTML = ''
+  for (var i=0; i < clothingList.length; i++) {
+    
+    let typeID = clothingList[i].type.split('%')[1]
+
+    var listItem = document.createElement('div')
+    listItem.className = 'clothesListItem'
+    listItem.setAttribute('data', i)
+    listItem.innerHTML = '<object class="clothesListIcon" data="'+ referenceTable.clothingIconPaths[Number(typeID)] +'" onload="var x = this.contentDocument.querySelectorAll(\'path\'); for(var i=0;i<x.length;i++){x[i].setAttribute(\'fill\', \''+clothingList[i].mainColour+'\')};"></object><p class="clothesListName">'+clothingList[i].name+'</p>'
+    
+    document.getElementById('clothingListHolder').appendChild(listItem)
+  }
+}
+
+document.getElementById('clothingListHolder').addEventListener('click', (e) => {
+
+  if (outfitGrid.length == 8) {
+    return
+  }
+
+  if (e.target.classList.contains('clothesListItem')) {
+    if (e.target.classList.contains('selectedClothingItem')) {
+      // Deselect
+      e.target.classList.remove('selectedClothingItem');
+      const index = outfitGrid.indexOf(clothingList[e.target.getAttribute('data')])
+      if (index > -1) {
+        outfitGrid.splice(index, 1)
+      }
+      updateOutfitClothingGrid();
+    } else {
+      // Select
+      e.target.classList.add('selectedClothingItem');
+      console.log('Selected: '+clothingList[e.target.getAttribute('data')].name)
+      outfitGrid.push(clothingList[e.target.getAttribute('data')])
+      updateOutfitClothingGrid();
+    }
+  }
+})
+
+let outfitGrid = []
+let submitOutfitDisabled = true
+
+const updateOutfitClothingGrid = () => {
+
+  if (outfitGrid.length < 1) {
+    submitOutfitDisabled = true
+  } else {
+    submitOutfitDisabled = false
+  }
+
+  document.getElementById('outfitClothingGrid').innerHTML = '';
+  for (var i=0; i<outfitGrid.length; i++) {
+    var typeID = outfitGrid[i].type.replace('%', '')
+    document.getElementById('outfitClothingGrid').innerHTML += 
+    '<div id="c'+outfitGrid[i].id+'" class="outfitClothingGridItem"><object class="clothesListIcon" data="'+ referenceTable.clothingIconPaths[Number(typeID)] +'" onload="var x = this.contentDocument.querySelectorAll(\'path\'); for(var i=0;i<x.length;i++){x[i].setAttribute(\'fill\', \''+clothingList[i].mainColour+'\')};"></object></div>'
+  }
+}
+
+
+var outfitArray = [];
+
+const updateOutfitArray = () => {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = () => {
+    if (xhttp.readyState == XMLHttpRequest.DONE && xhttp.status === 200) {
+      outfitArray = JSON.parse(xhttp.responseText);
+      updateCarousel();
+      console.log(outfitArray)
+    }
+  }
+  xhttp.open('GET', '/api/getOutfit');
+  xhttp.send()
+}
+
+const updateCarousel = () => {
+  document.getElementById('outfitCarouselHolder').innerHTML = ''
+  for (var i=0; i < outfitArray.length; i++) {
+    
+    let outfitID = outfitArray[i].id
+
+    var carouselItem = document.createElement('div')
+    carouselItem.className = 'outfitCarouselCell'
+    carouselItem.id = outfitID;
+
+    for (var j=0; j<outfitArray[i].items.length; j++) {
+      let itemOBJ = clothingList.find(x => x.id === outfitArray[i].items[j])
+      if (!itemOBJ) {
+        console.log('Clothing from outfit: '+outfitArray[i].id+' missing.')
+        return
+      }
+      console.log(itemOBJ, outfitArray[i].items);
+      var carouselCellItem = document.createElement('div')
+      carouselCellItem.className = 'outfitCarouselCellItem'
+      carouselCellItem.innerHTML = '<object class="clothesListIcon" data="'+ referenceTable.clothingIconPaths[Number(itemOBJ.type.replace('%', ''))] +'" onload="var x = this.contentDocument.querySelectorAll(\'path\'); for(var i=0;i<x.length;i++){x[i].setAttribute(\'fill\', \''+itemOBJ.mainColour+'\')};"></object>'
+      carouselItem.appendChild(carouselCellItem)
+    }
+
+    // carouselItem.innerHTML = '<object class="clothesListIcon" data="'+ referenceTable.clothingIconPaths[Number(typeID)] +'" onload="var x = this.contentDocument.querySelectorAll(\'path\'); for(var i=0;i<x.length;i++){x[i].setAttribute(\'fill\', \''+clothingList[i].mainColour+'\')};"></object><p class="clothesListName">'+clothingList[i].name+'</p><div id="rmItem'+ clothingList[i].id +'" class="rmClothesItem">-</div>'
+    
+    document.getElementById('outfitCarouselHolder').appendChild(carouselItem)
+  }
+}
+
+updateOutfitArray();
+
+
+document.getElementById('submitOutfit').addEventListener('click', () => {
+  if (!submitOutfitDisabled) {
+
+    var data = {
+      id: '',
+      name: '',
+      items: []
+    }
+    
+    const whiteSpace = new RegExp("^\\s*$");
+
+    if (whiteSpace.test(document.getElementById('outfitNameInput').value)) {
+      data.name = "Unnamed"
+    } else {
+      data.name = document.getElementById("outfitNameInput").value
+    }
+
+    for (let i=0; i<outfitGrid.length; i++) {
+      data.items.push(outfitGrid[i].id);
+    }
+
+    // ID data collection
+    data.id = 'to_be_changed'
+    
+    // PUSH data to server
+    console.log(data)
+
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = () => {
+      if (xhttp.readyState == XMLHttpRequest.DONE && xhttp.status === 200) {
+        console.log('Added to database successfully')
+        updateOutfitArray();
+      }
+    }
+    // console.log(body)
+    xhttp.open('POST', '/api/addOutfit');
     xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
     xhttp.send(JSON.stringify(data));
 
