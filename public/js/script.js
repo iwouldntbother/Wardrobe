@@ -332,11 +332,17 @@ const updateCarousel = () => {
     carouselItem.className = 'outfitCarouselCell'
     carouselItem.id = outfitID;
 
+    var outfitName = document.createElement('h1')
+    outfitName.className = 'outfitName'
+    outfitName.innerHTML = outfitArray[i].name || 'Untitled'
+
+    carouselItem.appendChild(outfitName);
+
     for (var j=0; j<outfitArray[i].items.length; j++) {
       let itemOBJ = clothingList.find(x => x.id === outfitArray[i].items[j])
       if (!itemOBJ) {
         console.log('Clothing from outfit: '+outfitArray[i].id+' missing.')
-        return
+        break
       }
       console.log(itemOBJ, outfitArray[i].items);
       var carouselCellItem = document.createElement('div')

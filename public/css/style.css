@@ -413,3 +413,10 @@ input[type='color'] {
   align-items: center;
   justify-content: center;
 }
+
+.outfitName {
+  margin: 0;
+  font-size: 5vw;
+  width: 50vw;
+  text-align: center;
+}

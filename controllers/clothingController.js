@@ -34,6 +34,7 @@ exports.addClothing = async (req, res) => {
 
   clothing.save((err, clothing) => {
     if (err) {
+      console.log(err, req.body);
       res.status(500).send({ message: err });
       return;
     }
