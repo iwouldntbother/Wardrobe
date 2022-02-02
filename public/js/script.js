@@ -232,6 +232,9 @@ document.getElementById('submitClothingItem').addEventListener('click', () => {
       if (xhttp.readyState == XMLHttpRequest.DONE && xhttp.status === 200) {
         console.log('Added to database successfully')
         updateClothingArray();
+        console.log(xhttp.responseText)
+      } else if (xhttp.readyState == XMLHttpRequest.DONE && xhttp.status === 500) {
+        console.log(xhttp.responseText)
       }
     }
     // console.log(body)
