@@ -6,8 +6,10 @@ const Clothing = mongoose.model(
     id: String,
     type: String,
     name: String,
-    mainColour: String,
-    subColours: Array
+    brand: String,
+    size: String,
+    source: String,
+    colour: String,
   })
 );
 

@@ -1,20 +1,29 @@
 /* Fonts */
 
-  /* Poppins */
-  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+/* Poppins */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
 /* Main CSS */
 
-html, body {
+html,
+body {
   margin: 0;
   height: 100vh;
   overflow: hidden;
   font-family: 'Poppins', sans-serif;
   position: fixed;
+  background: var(--gray2);
 }
 
 * {
   box-sizing: border-box;
+}
+
+:root {
+  --gray1: #f5f6fa;
+  --gray2: #dcdde1;
+  --gray3: #353b48;
+  --gray4: #2f3640;
 }
 
 #mainContainer {
@@ -32,81 +41,84 @@ html, body {
   top: 0;
 }
 
+/* Title */
+
+#titleText {
+  margin: 0;
+  font-size: 3rem;
+  margin: 0 0 1rem 1rem;
+}
+
 /* Carousel */
 
 #outfitCarouselContainer {
   width: 100vw;
-  height: 40vh;
+  height: 45vh;
   /* background-color: cornflowerblue; */
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.carouselTopBar {
-  height: 4vh;
-  /* background-color: blueviolet; */
-  width: 100vw;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-start;
-}
-
-.carouselTopBar button {
-  background: none;
-  border: none;
-  color: black;
-  font-size: 5vw;
-}
-
 #outfitCarouselHolder {
   width: 100vw;
-  height: 32vh;
+  height: 43vh;
+  overflow-x: scroll;
   display: flex;
   flex-direction: row;
   /* background-color: turquoise; */
 }
 
-/* .outfitCarouselCell {
-  width: 50vw;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin: 0 2vw;
-  background-color: violet;
-} */
-
-/* Palette */
-
-#paletteHolder {
-  width: 100vw;
-  height: 25vw;
+#outfitCarouselContainer .outfitCarouselCell {
+  min-width: 60vw;
+  max-height: 100%;
   display: flex;
   flex-direction: row;
-  align-items: flex-start;
-}
-
-#mainColour {
-  width: 25vw;
-  height: 25vw;
-}
-
-.subColoursHolder {
-  display: flex;
-  max-width: 75vw;
-  height: 25vw;
-  flex-direction: column;
   flex-wrap: wrap;
   align-items: flex-start;
-  justify-content: left;
+  justify-content: flex-start;
+  overflow: hidden;
+  margin: 0 2vw;
+  background: white;
+  border-radius: 2rem;
+  padding-inline: 2rem;
 }
 
-.subColour {
-  width: 12.5vw;
-  height: 12.5vw;
+.outfitCarouselCell .outfitName {
+  margin-top: 1rem;
+  font-size: 6vw;
+  max-width: calc(50vw - 4rem);
+}
+
+#outfitCarouselContainer .outfitClothingGridItem {
+  width: calc(47vw / 2);
+  height: calc(47vw / 2);
+  border: 1vw solid black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#outfitCarouselContainer .outfitCarouselCellItemGrid {
+  width: 50vw;
+  padding-left: 0.5vw;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+#outfitCarouselContainer .outfitCarouselCellItem {
+  width: calc(42vw / 2);
+  height: calc(42vw / 2);
+  border: 1vw solid black;
+  margin-left: 1vw;
+  margin-bottom: 1vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* Slide Up Container */
@@ -121,7 +133,8 @@ html, body {
 }
 
 #slideUpBarHolder {
-  height: 3vh;
+  height: 4vh;
+  margin-bottom: -0.5vh;
   background-color: white;
   display: flex;
   justify-content: center;
@@ -183,7 +196,8 @@ html, body {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
-  align-items: flex-start;
+  align-items: center;
+  overflow: hidden;
 }
 
 .clothesListIcon {
@@ -196,10 +210,22 @@ html, body {
 .clothesListName {
   margin: 0;
   max-width: calc(100vw - 8vh);
-  height: 6vh;
+  height: 3vh;
   font-size: 5vw;
   font-weight: 600;
   text-transform: uppercase;
+}
+
+.clothesListDetails {
+  height: 3vh;
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  max-width: calc(100vw - 8vh);
+}
+
+.clothesListDetails p {
+  margin: 0;
 }
 
 .rmClothesItem {
@@ -211,8 +237,9 @@ html, body {
   margin-left: auto;
   align-items: center;
   justify-content: center;
-  color: white;
-  background: darkred;
+  color: red;
+  transform: rotate(45deg);
+  font-size: 10vw;
 }
 
 /* Menu Bar */
@@ -255,23 +282,39 @@ html, body {
   margin-top: 1vw;
 }
 
-/*            */
+/* ========== */
 /* Items Page */
-/*            */
+/* ========== */
 
 #itemsPageContainer {
-  overflow-y: scroll;
+  overflow: hidden;
+  padding-inline: 0.5rem;
 }
 
-#itemsPageContainer h1, #itemsPageContainer h2 {
-  margin-left: 3vw;
-  margin-bottom: 1vw;
+#itemsPageContainer .itemHolder {
+  background-color: white;
+  border-radius: 1rem;
+}
+
+#itemsPageContainer h1 {
+  margin: 1rem;
+  font-size: 2rem;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+#itemsPageContainer h2,
+#itemsPageContainer h3 {
+  margin-left: 1rem;
+  margin-bottom: 0.5vh;
+  margin-top: 1vh;
+  text-transform: uppercase;
 }
 
 #clothingGrid {
-  width: 94vw;
+  width: calc(100% - 2rem);
   height: 47vw;
-  margin-left: 3vw;
+  margin-inline: 1rem;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
@@ -284,7 +327,7 @@ html, body {
 .clothingGridItem {
   width: calc(47vw / 2);
   height: calc(47vw / 2);
-  border: 1vw solid black;
+  /* border: 1vw solid black; */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -294,55 +337,30 @@ html, body {
   background-color: teal;
 }
 
-input[type='text'] {
-  width: 95vw;
+#itemsPageContainer select {
+  width: calc(100% - 2rem);
   height: 8vw;
-  font-size: 5vw;
-  margin-left: 2.5vw;
+  font-size: 6vw;
+  margin-left: 1rem;
+  border: none;
 }
 
-input[type='color'] {
-  width: 95vw;
-  height: 8vw;
-  margin-left: 2.5vw;
+#itemsPageContainer input[type='text'] {
+  width: calc(100% - 2rem);
+  height: 6vw;
+  font-size: 6vw;
+  margin-left: 1rem;
+  border: none;
+}
+
+#itemsPageContainer input[type='color'] {
+  width: calc(100% - 2rem);
+  height: 6vw;
+  margin-left: 1rem;
   border: none;
   padding: 0;
   /* -webkit-appearance: none; */
   border-radius: 0;
-}
-
-.subInput {
-  width: 80vw;
-  margin-left: 2.5vw;
-}
-
-.subColourHolder {
-  display: flex;
-  flex-direction: row;
-  margin-top: 2.5vw;
-}
-
-.subColourRM {
-  width: 13vw;
-  margin-left: 2vw;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: darkred;
-  color: white;
-}
-
-#addSubBTN {
-  width: 20vw;
-  height: 8vw;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: darkgreen;
-  color: white;
-  align-self: center;
-  margin-top: 2.5vw;
-  margin-left: 40vw;
 }
 
 #submitClothingItem {
@@ -354,6 +372,7 @@ input[type='color'] {
   justify-content: center;
   background-color: cornflowerblue;
   color: white;
+  border-radius: 1rem;
 }
 
 .disabled {
@@ -383,7 +402,7 @@ input[type='color'] {
   overflow-x: scroll;
 }
 
-.outfitClothingGridItem {
+#outfitPageContainer .outfitClothingGridItem {
   width: calc(47vw / 2);
   height: calc(47vw / 2);
   border: 1vw solid black;
@@ -392,9 +411,9 @@ input[type='color'] {
   justify-content: center;
 }
 
-.outfitCarouselCell {
+#outfitPageContainer .outfitCarouselCell {
   width: 50vw;
-  height: 100%;
+  max-height: 100%;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -405,18 +424,36 @@ input[type='color'] {
   background: blueviolet;
 }
 
-.outfitCarouselCellItem {
-  width: calc(46vw / 2);
-  height: calc(46vw / 2);
+#outfitPageContainer .outfitCarouselCellItemGrid {
+  width: 50vw;
+  padding-left: 0.5vw;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+#outfitPageContainer .outfitCarouselCellItem {
+  width: calc(42vw / 2);
+  height: calc(42vw / 2);
   border: 1vw solid black;
+  margin-left: 1vw;
+  margin-bottom: 1vw;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.outfitName {
+#outfitPageContainer .outfitName {
   margin: 0;
   font-size: 5vw;
   width: 50vw;
   text-align: center;
+}
+
+#clothingListHolder {
+  overflow-y: scroll;
+  max-height: 30vh;
 }
