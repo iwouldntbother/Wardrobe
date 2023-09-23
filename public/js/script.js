@@ -92,10 +92,12 @@ const updateList = () => {
     listIcon.data = referenceTable.clothingIconPaths[Number(typeID)];
     listIcon.setAttribute(
       'onload',
-      "var x = this.contentDocument.querySelectorAll('path'); for(var i=0;i<x.length;i++){x[i].setAttribute('fill', '" +
+      "for (let i=0; i<this.contentDocument.querySelectorAll('path').length; i++) {this.contentDocument.querySelectorAll('path')[i].setAttribute('fill', '" +
         clothingList[i].colour +
-        "'')};"
+        "')};"
     );
+    listIcon.setAttribute('colour', clothingList[i].colour);
+
     listItem.appendChild(listIcon);
 
     let textHolder = document.createElement('div');
@@ -146,7 +148,9 @@ const updateList = () => {
 
 document.addEventListener('click', (e) => {
   if (e.target && e.target.className == 'rmClothesItem') {
-    var r = confirm('Are you sure you want to delete this item?');
+    var r = confirm(
+      'Are you sure you want to delete this item? (This will also remove any outfits containing this item.'
+    );
     var id = e.target.id.replace('rmItem', '');
     if (r) {
       deleteClothingItem(id);
@@ -174,6 +178,7 @@ const deleteClothingItem = (id) => {
     if (xhttp.readyState == XMLHttpRequest.DONE && xhttp.status === 200) {
       console.log('Removed from database successfully');
       updateClothingArray();
+      updateOutfitArray();
     }
   };
   // console.log(body)
@@ -225,33 +230,6 @@ const buildGrid = () => {
 
 buildGrid();
 
-var subCount = 1;
-
-const addSubOption = () => {
-  if (subCount < 12) {
-    var newNo = document.getElementById('clothingSubColours').childElementCount;
-    var newInput = document.createElement('div');
-    newInput.innerHTML =
-      "<input class='subInput' id='subColourInput" +
-      Number(newNo) +
-      "' type='color'><div class='subColourRM' id='subColourRM" +
-      Number(newNo) +
-      "'>-</div>";
-    newInput.className = 'subColourHolder';
-    newInput.id = 'subColourHolder' + Number(newNo);
-    document.getElementById('clothingSubColours').appendChild(newInput);
-    // var newInput = "<div class='subColourHolder' id='subColourHolder"+Number(newNo)+"'><input class='subInput' id='subColourInput"+Number(newNo)+"' type='color'><div class='subColourRM' id='subColourRM"+Number(newNo)+"'>-</div></div>"
-    // document.getElementById('clothingSubColours').innerHTML += "<div class='subColourHolder' id='subColourHolder"+Number(newNo)+"'><input class='subInput' id='subColourInput"+Number(newNo)+"' type='color'><div class='subColourRM' id='subColourRM"+Number(newNo)+"'>-</div></div>"
-    subCount++;
-  }
-};
-
-function rmSub(id) {
-  var index = id.replace('subColourRM', '');
-  document.getElementById('subColourHolder' + index).remove();
-  subCount--;
-}
-
 var selectedItem;
 var submitDisabled = true;
 
@@ -271,8 +249,6 @@ document.body.addEventListener('click', (event) => {
     [...document.getElementById('clothingGrid').children].includes(event.target)
   ) {
     selectItem(event.target);
-  } else if (event.target.id.includes('subColourRM')) {
-    rmSub(event.target.id);
   } else {
     return;
   }
@@ -345,14 +321,60 @@ const updateOutfitList = () => {
     var listItem = document.createElement('div');
     listItem.className = 'clothesListItem';
     listItem.setAttribute('data', i);
-    listItem.innerHTML =
-      '<object class="clothesListIcon" data="' +
-      referenceTable.clothingIconPaths[Number(typeID)] +
-      "\" onload=\"var x = this.contentDocument.querySelectorAll('path'); for(var i=0;i<x.length;i++){x[i].setAttribute('fill', '" +
-      clothingList[i].mainColour +
-      '\')};"></object><p class="clothesListName">' +
-      clothingList[i].name +
-      '</p>';
+
+    // Icon
+    let listIcon = document.createElement('object');
+    listIcon.className = 'clothesListIcon';
+    listIcon.data = referenceTable.clothingIconPaths[Number(typeID)];
+    listIcon.setAttribute(
+      'onload',
+      "for (let i=0; i<this.contentDocument.querySelectorAll('path').length; i++) {this.contentDocument.querySelectorAll('path')[i].setAttribute('fill', '" +
+        clothingList[i].colour +
+        "')};"
+    );
+    listItem.appendChild(listIcon);
+
+    let textHolder = document.createElement('div');
+
+    // Name
+    let listName = document.createElement('p');
+    listName.className = 'clothesListName';
+    listName.innerHTML = clothingList[i].name;
+    textHolder.appendChild(listName);
+
+    // Details
+    let detailsHolder = document.createElement('div');
+    detailsHolder.className = 'clothesListDetails';
+
+    // Brand
+    let listBrand = document.createElement('p');
+    listBrand.className = 'clothesListBrand';
+    listBrand.innerHTML = clothingList[i].brand;
+    detailsHolder.append(listBrand);
+
+    // Size
+    let listSize = document.createElement('p');
+    listSize.className = 'clothesListSize';
+    listSize.innerHTML = clothingList[i].size;
+    detailsHolder.append(listSize);
+
+    // Source
+    let listSource = document.createElement('p');
+    listSource.className = 'clothesListSource';
+    listSource.innerHTML = getFullName(clothingList[i].source);
+    detailsHolder.append(listSource);
+
+    textHolder.appendChild(detailsHolder);
+
+    listItem.appendChild(textHolder);
+
+    // Remove Button
+    let deleteBTN = document.createElement('div');
+    deleteBTN.id = 'rmItem' + clothingList[i].id;
+    deleteBTN.className = 'rmClothesItem';
+    deleteBTN.innerHTML = '+';
+
+    listItem.appendChild(deleteBTN);
 
     document.getElementById('clothingListHolder').appendChild(listItem);
   }
@@ -399,14 +421,27 @@ const updateOutfitClothingGrid = () => {
   document.getElementById('outfitClothingGrid').innerHTML = '';
   for (var i = 0; i < outfitGrid.length; i++) {
     var typeID = outfitGrid[i].type.replace('%', '');
-    document.getElementById('outfitClothingGrid').innerHTML +=
-      '<div id="c' +
-      outfitGrid[i].id +
-      '" class="outfitClothingGridItem"><object class="clothesListIcon" data="' +
-      referenceTable.clothingIconPaths[Number(typeID)] +
-      "\" onload=\"var x = this.contentDocument.querySelectorAll('path'); for(var i=0;i<x.length;i++){x[i].setAttribute('fill', '" +
-      clothingList[i].mainColour +
-      '\')};"></object></div>';
+
+    let gridItem = document.createElement('div');
+    gridItem.id = 'c' + outfitGrid[i].id;
+    gridItem.className = 'outfitClothingGridItem';
+
+    let gridItemObject = document.createElement('object');
+    gridItemObject.classNAme = 'clothesListIcon';
+    gridItemObject.setAttribute(
+      'data',
+      referenceTable.clothingIconPaths[Number(typeID)]
+    );
+    gridItemObject.setAttribute(
+      'onload',
+      "for (let i=0; i<this.contentDocument.querySelectorAll('path').length; i++) {this.contentDocument.querySelectorAll('path')[i].setAttribute('fill', '" +
+        clothingList[i].colour +
+        "')};"
+    );
+
+    gridItem.append(gridItemObject);
+
+    document.getElementById('outfitClothingGrid').append(gridItem);
   }
 };
 
@@ -434,11 +469,23 @@ const updateCarousel = () => {
     carouselItem.className = 'outfitCarouselCell';
     carouselItem.id = outfitID;
 
+    let outfitDetailsHolder = document.createElement('div');
+    outfitDetailsHolder.className = 'outfitDetailsHolder';
+
     var outfitName = document.createElement('h1');
     outfitName.className = 'outfitName';
     outfitName.innerHTML = outfitArray[i].name || 'Untitled';
 
-    carouselItem.appendChild(outfitName);
+    outfitDetailsHolder.append(outfitName);
+
+    let outfitDelBTN = document.createElement('p');
+    outfitDelBTN.className = 'outfitDelBTN';
+    outfitDelBTN.id = 'rmOutfit' + String(outfitID);
+    outfitDelBTN.innerHTML = '+';
+
+    outfitDetailsHolder.append(outfitDelBTN);
+
+    carouselItem.append(outfitDetailsHolder);
 
     var carouselItemGrid = document.createElement('div');
     carouselItemGrid.className = 'outfitCarouselCellItemGrid';
@@ -448,20 +495,26 @@ const updateCarousel = () => {
       let itemOBJ = clothingList.find((x) => x.id === outfitArray[i].items[j]);
       if (!itemOBJ) {
         console.log('Clothing from outfit: ' + outfitArray[i].id + ' missing.');
+        removeOutfit(outfitArray[i].id);
         break;
       }
-      console.log(itemOBJ, outfitArray[i].items);
+      // console.log(itemOBJ, outfitArray[i].items);
       var carouselCellItem = document.createElement('div');
       carouselCellItem.className = 'outfitCarouselCellItem';
-      carouselCellItem.innerHTML =
-        '<object class="clothesListIcon" data="' +
-        referenceTable.clothingIconPaths[
-          Number(itemOBJ.type.replace('%', ''))
-        ] +
-        "\" onload=\"var x = this.contentDocument.querySelectorAll('path'); for(var i=0;i<x.length;i++){x[i].setAttribute('fill', '" +
-        itemOBJ.mainColour +
-        '\')};"></object>';
-      carouselItemGrid.appendChild(carouselCellItem);
+
+      let carouselCellItemObject = document.createElement('object');
+      carouselCellItemObject.className = 'clothesListIcon';
+      carouselCellItemObject.data =
+        referenceTable.clothingIconPaths[Number(itemOBJ.type.replace('%', ''))];
+      carouselCellItemObject.setAttribute(
+        'onload',
+        "for (let i=0; i<this.contentDocument.querySelectorAll('path').length; i++) {this.contentDocument.querySelectorAll('path')[i].setAttribute('fill', '" +
+          itemOBJ.colour +
+          "')};"
+      );
+      carouselCellItem.append(carouselCellItemObject);
+
+      carouselItemGrid.append(carouselCellItem);
     }
 
     // carouselItem.innerHTML = '<object class="clothesListIcon" data="'+ referenceTable.clothingIconPaths[Number(typeID)] +'" onload="var x = this.contentDocument.querySelectorAll(\'path\'); for(var i=0;i<x.length;i++){x[i].setAttribute(\'fill\', \''+clothingList[i].mainColour+'\')};"></object><p class="clothesListName">'+clothingList[i].name+'</p><div id="rmItem'+ clothingList[i].id +'" class="rmClothesItem">-</div>'
@@ -470,7 +523,34 @@ const updateCarousel = () => {
   }
 };
 
-updateOutfitArray();
+const removeOutfit = (itemID) => {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = () => {
+    if (xhttp.readyState == XMLHttpRequest.DONE && xhttp.status === 200) {
+      // let replyString = JSON.parse(xhttp.responseText);
+      // console.log(replyString);
+      updateOutfitArray();
+    }
+  };
+  xhttp.open('POST', '/api/rmOutfitItem');
+  xhttp.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+  xhttp.send(JSON.stringify({ itemID: itemID }));
+};
+
+document
+  .querySelector('#outfitCarouselHolder')
+  .addEventListener('click', (e) => {
+    // console.log(e.target.className);
+    if (e.target.className === 'outfitDelBTN') {
+      var r = confirm('Are you sure you want to delete this outfit?');
+      var id = e.target.id.replace('rmOutfit', '');
+      if (r) {
+        removeOutfit(id);
+      } else {
+        return;
+      }
+    }
+  });
 
 document.getElementById('submitOutfit').addEventListener('click', () => {
   if (!submitOutfitDisabled) {
@@ -514,6 +594,7 @@ document.getElementById('submitOutfit').addEventListener('click', () => {
 
 // DEV //
 
-loadPage('items');
+// loadPage('items');
 
 updateClothingArray();
+updateOutfitArray();

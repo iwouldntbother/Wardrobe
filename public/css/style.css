@@ -71,6 +71,7 @@ body {
 
 #outfitCarouselContainer .outfitCarouselCell {
   min-width: 60vw;
+  width: 60vw;
   max-height: 100%;
   display: flex;
   flex-direction: row;
@@ -84,10 +85,25 @@ body {
   padding-inline: 2rem;
 }
 
+.outfitCarouselCell .outfitDetailsHolder {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  min-width: 100%;
+}
+
 .outfitCarouselCell .outfitName {
   margin-top: 1rem;
   font-size: 6vw;
   max-width: calc(50vw - 4rem);
+}
+
+.outfitCarouselCell .outfitDelBTN {
+  font-size: 8vw;
+  margin: 0;
+  color: red;
+  transform: rotate(45deg);
 }
 
 #outfitCarouselContainer .outfitClothingGridItem {
