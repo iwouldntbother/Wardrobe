@@ -399,12 +399,19 @@ document.getElementById('clothingListHolder').addEventListener('click', (e) => {
     } else {
       // Select
       e.target.classList.add('selectedClothingItem');
-      console.log(
-        'Selected: ' + clothingList[e.target.getAttribute('data')].name
-      );
+      console.log('Selected: ' + clothingList[e.target.getAttribute('data')]);
       outfitGrid.push(clothingList[e.target.getAttribute('data')]);
       updateOutfitClothingGrid();
     }
+  }
+
+  if (
+    outfitGrid.length > 0 &&
+    document.querySelector('#submitOutfit').classList.contains('disabled')
+  ) {
+    document.querySelector('#submitOutfit').classList.remove('disabled');
+  } else if (outfitGrid.length === 0) {
+    document.querySelector('#submitOutfit').classList.add('disabled');
   }
 });
 
@@ -435,7 +442,7 @@ const updateOutfitClothingGrid = () => {
     gridItemObject.setAttribute(
       'onload',
       "for (let i=0; i<this.contentDocument.querySelectorAll('path').length; i++) {this.contentDocument.querySelectorAll('path')[i].setAttribute('fill', '" +
-        clothingList[i].colour +
+        outfitGrid[i].colour +
         "')};"
     );
 
@@ -472,11 +479,11 @@ const updateCarousel = () => {
     let outfitDetailsHolder = document.createElement('div');
     outfitDetailsHolder.className = 'outfitDetailsHolder';
 
-    var outfitName = document.createElement('h1');
-    outfitName.className = 'outfitName';
-    outfitName.innerHTML = outfitArray[i].name || 'Untitled';
+    // var outfitName = document.createElement('h1');
+    // outfitName.className = 'outfitName';
+    // outfitName.innerHTML = outfitArray[i].name || 'Untitled';
 
-    outfitDetailsHolder.append(outfitName);
+    // outfitDetailsHolder.append(outfitName);
 
     let outfitDelBTN = document.createElement('p');
     outfitDelBTN.className = 'outfitDelBTN';
@@ -556,17 +563,17 @@ document.getElementById('submitOutfit').addEventListener('click', () => {
   if (!submitOutfitDisabled) {
     var data = {
       id: '',
-      name: '',
+      // name: '',
       items: [],
     };
 
-    const whiteSpace = new RegExp('^\\s*$');
+    // const whiteSpace = new RegExp('^\\s*$');
 
-    if (whiteSpace.test(document.getElementById('outfitNameInput').value)) {
-      data.name = 'Unnamed';
-    } else {
-      data.name = document.getElementById('outfitNameInput').value;
-    }
+    // if (whiteSpace.test(document.getElementById('outfitNameInput').value)) {
+    //   data.name = 'Unnamed';
+    // } else {
+    //   data.name = document.getElementById('outfitNameInput').value;
+    // }
 
     for (let i = 0; i < outfitGrid.length; i++) {
       data.items.push(outfitGrid[i].id);
@@ -594,7 +601,7 @@ document.getElementById('submitOutfit').addEventListener('click', () => {
 
 // DEV //
 
-// loadPage('items');
+loadPage('outfits');
 
 updateClothingArray();
 updateOutfitArray();

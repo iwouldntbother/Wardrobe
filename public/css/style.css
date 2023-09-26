@@ -53,7 +53,7 @@ body {
 
 #outfitCarouselContainer {
   width: 100vw;
-  height: 45vh;
+  height: 43vh;
   /* background-color: cornflowerblue; */
   display: flex;
   flex-direction: column;
@@ -87,7 +87,7 @@ body {
 
 .outfitCarouselCell .outfitDetailsHolder {
   display: flex;
-  flex-direction: row;
+  flex-direction: row-reverse;
   align-items: center;
   justify-content: space-between;
   min-width: 100%;
@@ -127,14 +127,19 @@ body {
 }
 
 #outfitCarouselContainer .outfitCarouselCellItem {
-  width: calc(42vw / 2);
-  height: calc(42vw / 2);
-  border: 1vw solid black;
+  width: 21vw;
+  height: 21vw;
+  /* border: 1vw solid black; */
   margin-left: 1vw;
   margin-bottom: 1vw;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+#outfitCarouselContainer .clothesListIcon {
+  width: 21vw;
+  height: 21vw;
 }
 
 /* Slide Up Container */
@@ -157,6 +162,7 @@ body {
   align-items: center;
   border-radius: 6vw 6vw 0 0;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  pointer-events: all;
 }
 
 #slideUpBar {
@@ -164,6 +170,7 @@ body {
   width: 80vw;
   border-radius: 20vw;
   background-color: gray;
+  pointer-events: none;
 }
 
 #slideUpContentHolder {
@@ -402,7 +409,30 @@ body {
 /* Outfit Page */
 
 .selectedClothingItem {
-  background: blueviolet;
+  background: cornflowerblue;
+}
+
+#outfitsPageContainer h1 {
+  margin: 1rem;
+  font-size: 2rem;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.section {
+  background-color: white;
+  border-radius: 1rem;
+  padding: 0.5rem;
+  margin: 1rem 0 0 2.5vw;
+  width: 95vw;
+}
+
+#outfitsPageContainer h2,
+#outfitsPageContainer h3 {
+  margin-left: 1rem;
+  margin-bottom: 0.5vh;
+  margin-top: 1vh;
+  text-transform: uppercase;
 }
 
 #outfitClothingGrid {
@@ -410,7 +440,7 @@ body {
   height: 47vw;
   margin-left: 3vw;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   flex-wrap: wrap;
   align-items: flex-start;
   justify-content: flex-start;
@@ -471,5 +501,39 @@ body {
 
 #clothingListHolder {
   overflow-y: scroll;
-  max-height: 30vh;
+  height: 30vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+#clothingListHolder .clothesListItem {
+  min-height: 7vh;
+}
+
+#clothingListHolder .clothesListItem object,
+#clothingListHolder .clothesListItem p,
+#clothingListHolder .clothesListItem div {
+  pointer-events: none;
+}
+
+#submitOutfit {
+  width: 90vw;
+  height: 10vw;
+  margin: 5vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: cornflowerblue;
+  color: white;
+  border-radius: 1rem;
+}
+
+#outfitsPageContainer .clothesListItem {
+  max-width: 90vw;
+}
+
+#outfitsPageContainer .rmClothesItem {
+  display: none;
 }

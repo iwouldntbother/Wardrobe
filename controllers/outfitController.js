@@ -7,7 +7,7 @@ const addOutfit = async (req, res) => {
 
   const outfit = new Outfit({
     id: newID,
-    name: req.body.name,
+    // name: req.body.name,
     items: req.body.items,
   });
 
